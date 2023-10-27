@@ -23,7 +23,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     cookie: { maxAge: 1000 * 60 * 30 }, //for 30minut coocie ni ichida danniylar turadi
-    Store: Store,
+    store: Store,
     resave: true,
     saveUninitialized: true,
   })

@@ -26,7 +26,7 @@ router_bssr.get("/check-me", restaurantController.checkSessions);
 router_bssr.get("/products/menu", restaurantController.getMyRestaurantData);
 router_bssr.post(
   "/products/create",
-  restaurantController.validateAuthRestaurant,
+  restaurantController.validateAuthRestaurant, // Sessionni tekshiryapti
   uploader_product.array("product_images", 5),
   productController.addNewProduct
 );

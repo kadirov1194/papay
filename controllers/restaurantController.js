@@ -81,6 +81,7 @@ restaurantController.logout = (req, res) => {
   res.send("logout sahifasidasiz");
 };
 //============================================================
+// Kirib kelayotgan sessionni tekshiradi, TYPE: RESTAURANT
 restaurantController.validateAuthRestaurant = (req, res, next) => {
   if (req.session?.member?.mb_type === "RESTAURANT") {
     req.member = req.session.member;

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const {
   product_collection_enums,
-  product_status_enums,
+  product_size_enums,
   product_status_enums,
   product_volume_enums,
 } = require("../lib/config");
@@ -39,7 +39,7 @@ const productSchema = new mongoose.Schema(
       required: false,
       default: 0,
     },
-    product_left_ctn: {
+    product_left_cnt: {
       type: Number,
       required: true,
     },
