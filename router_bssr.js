@@ -30,6 +30,11 @@ router_bssr.post(
   uploader_product.array("product_images", 5),
   productController.addNewProduct
 );
-router_bssr.post("/products/edit/:id", productController.updateChosenProduct);
+router_bssr.post(
+  "/products/edit/:id",
+  restaurantController.validateAuthRestaurant,
+  productController.updateChosenProduct
+); //tovar edit va id si kirib kelishi kk
+//va productController dan updateChosenProduct metodga borishi kk
 
 module.exports = router_bssr;
