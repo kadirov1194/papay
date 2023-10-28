@@ -22,7 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 1000 * 60 * 30 }, //for 30minut coocie ni ichida danniylar turadi
+    cookie: {
+      maxAge: 1000 * 60 * 30,
+    }, //for 30minut coocie ni ichida danniylar turadi
     store: Store,
     resave: true,
     saveUninitialized: true,
