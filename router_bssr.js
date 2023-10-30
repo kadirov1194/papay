@@ -18,7 +18,7 @@ router_bssr
   .post("/sign-up", restaurantController.signupProcess);
 
 router_bssr
-  .get("/login", restaurantController.getLoginMyRestaurant)
+  .get("/login", restaurantController.getLoginMyRestaurant) //getLoginMyRestaurant pagega yuboradi, kerakli EJSga yuborish
   .post("/login", restaurantController.loginProcess);
 
 router_bssr.get("/logout", restaurantController.logout);
