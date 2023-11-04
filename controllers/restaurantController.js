@@ -95,6 +95,7 @@ restaurantController.loginProcess = async (req, res) => {
     res.json({ state: "fail", message: err.message });
   }
 };
+//------------------------------------------------------
 
 //----------------------------------------------------
 restaurantController.logout = (req, res) => {
