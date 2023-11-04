@@ -169,7 +169,7 @@ body {
   border-radius: 8px;
 }
 
-.media_frame {
+.media-frame {
   position: relative;
   margin-top: 15px;
   width: 100%;
@@ -179,14 +179,14 @@ body {
   justify-content: space-between;
 }
 
-.media_frame .upload_img_frame {
+.media-frame .upload_img_frame {
   position: relative;
   width: 275px;
   height: 93%;
   display: flex;
   border-radius: 15px;
 }
-.media_frame .upload_container {
+.media-frame .upload_container {
   position: relative;
   margin-left: 30px;
   width: 75%;
@@ -232,7 +232,7 @@ body {
   line-height: 26px;
   color: #ffffff;
 }
-.filebox .upload_name {
+.filebox .upload-name {
   position: relative;
   padding: 20px;
   width: 85%;
