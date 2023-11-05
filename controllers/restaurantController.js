@@ -22,11 +22,11 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
     console.log("GET: cont/getMyRestaurantProducts");
     // TODO: Get my restaurant Product
     const product = new Product(); // Product(); classdan object yaratdik
-    const data = await product.getAllProductsDataResto(res.locals.member); //res.locals.member ichidan datani olyapmiz
+    const data = await product.getAllProductsDataResto(res.locals.member); // Login bolgan userlar datalarini path qilib tekshiramiz  !!res.locals.member ichidan datani olyapmiz
     res.render("restaurant-menu", { restaurant_data: data });
   } catch (err) {
     console.log(`Error, cont/getMyRestaurantProducts, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
+    res.redirect("/resto"); //home-page ga yuboradi
   }
 };
 //---------------------------------------------------
