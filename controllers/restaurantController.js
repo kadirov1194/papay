@@ -99,8 +99,15 @@ restaurantController.loginProcess = async (req, res) => {
 
 //----------------------------------------------------
 restaurantController.logout = (req, res) => {
-  console.log("GET cont.logout");
-  res.send("logout sahifasidasiz");
+  try {
+    console.log("GET cont/logout");
+    req.session.destroy(function () {
+      res.redirect("/resto");
+    });
+  } catch (err) {
+    console.log(`Error, cont/logout, ${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
 };
 //============================================================
 // Kirib kelayotgan sessionni tekshiradi, TYPE: RESTAURANT
