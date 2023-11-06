@@ -196,7 +196,7 @@ body {
   flex-direction: column;
 }
 .media_text {
-  font-family: "GT Walshein Pro";
+  font-family: "GT Walsheim Pro";
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -225,7 +225,7 @@ body {
   background: #6a7a99;
   border-radius: 8px 8px 8px 8px;
 
-  font-family: "GT Walshein Pro";
+  font-family: "GT Walsheim Pro";
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -246,7 +246,7 @@ body {
 }
 .thumbnail_desc {
   margin-top: 25px;
-  font-family: "GT Walshein Pro";
+  font-family: "GT Walsheim Pro";
   font-style: normal;
   font-weight: 400;
   font-size: 15px;

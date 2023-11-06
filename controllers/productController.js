@@ -16,7 +16,7 @@ productController.getAllProducts = async (req, res) => {
 //=================addNewProduct===================================
 productController.addNewProduct = async (req, res) => {
   try {
-    console.log("POST: cont/addNewProduct");
+    console.log("POST: controller/addNewProduct");
 
     assert.ok(req.files, Definer.general_err3); //agar filelar yuklanmasa err beradi
 
@@ -25,25 +25,25 @@ productController.addNewProduct = async (req, res) => {
     data.product_images = req.files.map((ele) => {
       return ele.path;
     });
-    console.log(data);
+    // console.log(data);
 
     const result = await product.addNewProductData(data, req.member);
 
     const html = `<script>
-                  alert(new dish added successfully);
-                  window.location.replace{'/resto/products/menu};
+                  alert('new dish added successfully');
+                  window.location.replace{'/resto/products/menu'};
                   </script>`;
     res.end(html);
   } catch (err) {
-    console.log(`ERROR, cont/addNewProduct, ${err.message}`);
+    console.log(`ERROR, controller/addNewProduct, ${err.message}`);
   }
 };
 
 //=====================updateChosenProduct===========================
 productController.updateChosenProduct = async (req, res) => {
   try {
-    console.log("POST: cont/updateChosenProduct");
-    const product = new Product(); //product OBJECT yaratib oldik
+    console.log("POST: controller/updateChosenProduct");
+    const product = new Product(); //product Schema model OBJECT dan Instance hosil qildik
     const id = req.params.id; // params ni ichidan product id ni oldik
     const result = await product.updateChosenProductData(
       id,
@@ -52,7 +52,7 @@ productController.updateChosenProduct = async (req, res) => {
     );
     await res.json({ state: "success", data: result });
   } catch (err) {
-    console.log(`ERROR, cont/updateChosenProduct, ${err.message}`);
+    console.log(`ERROR, controller/updateChosenProduct, ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
 };

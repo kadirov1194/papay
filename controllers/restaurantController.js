@@ -1,9 +1,8 @@
+let restaurantController = module.exports;
 const Definer = require("../lib/mistake");
 const Member = require("../models/Member");
 const Product = require("../models/Product");
 const assert = require("assert");
-
-let restaurantController = module.exports;
 
 restaurantController.home = (req, res) => {
   try {
