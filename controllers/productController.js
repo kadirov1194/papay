@@ -6,9 +6,9 @@ let productController = module.exports;
 
 productController.getAllProducts = async (req, res) => {
   try {
-    console.log("GET: cont/getAllProducts");
-  } catch {
-    console.log(`ERROR, cont/getAllProducts, ${err.message}`);
+    console.log("GET: controller/getAllProducts", data);
+  } catch (err) {
+    console.log(`Error, controller/getAllProducts, ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
 };
@@ -17,28 +17,28 @@ productController.getAllProducts = async (req, res) => {
 productController.addNewProduct = async (req, res) => {
   try {
     console.log("POST: controller/addNewProduct");
-
-    assert.ok(req.files, Definer.general_err3); //agar filelar yuklanmasa err beradi
-
+    // console.log("Request files: ", req.files);
+    assert.ok(req.files, Definer.general_err3);
+    // console.log(req.member);
     const product = new Product();
     let data = req.body;
+
     data.product_images = req.files.map((ele) => {
-      return ele.path;
+      return ele.path.replace(/\\/g, "/");
     });
-    // console.log(data);
 
     const result = await product.addNewProductData(data, req.member);
 
     const html = `<script>
-                  alert('new dish added successfully');
-                  window.location.replace{'/resto/products/menu'};
+                    alert('new dish added successfully');
+                    window.location.replace('/resto/products/menu');
                   </script>`;
     res.end(html);
+    //Constructs an HTML response containing a JavaScript alert and a redirection to the product menu page and sends it as the response.
   } catch (err) {
-    console.log(`ERROR, controller/addNewProduct, ${err.message}`);
+    console.log(`Error, controller/addNewProduct, ${err.message}`);
   }
 };
-
 //=====================updateChosenProduct===========================
 productController.updateChosenProduct = async (req, res) => {
   try {
@@ -53,6 +53,6 @@ productController.updateChosenProduct = async (req, res) => {
     await res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR, controller/updateChosenProduct, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
+    // res.json({ state: "fail", message: err.message });
   }
 };

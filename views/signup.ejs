@@ -8,83 +8,78 @@
     method="POST"
     enctype="multipart/form-data"
   >
-    <div class="login_frame" style="width: 650px; height: 730px">
+    <div class="login_frame" style="width: 650px; height: 740px">
       <div class="login_top">
-        <span> Ro'yhatdan o'tish </span>
-        <div>
-          Bosh sahifaga qaytish <a href="/resto" style="color: #644efb">Home</a>
-        </div>
+        <span>Registration</span> <br />
+        <div>Back to <a href="/resto" style="color: #6440fb">Home</a> Page</div>
         <p>
-          Ro'yhatdan allaqachon o'tmganmisiz?
-          <a href="/resto/login" style="color: #644efb">Login</a>
+          Has alraedy registered?
+          <a href="/resto/login" style="color: #6440fb">Login</a>
         </p>
       </div>
 
       <div class="sign_input_frame">
         <div class="sign_up_frame">
-          <label for="">Foydalanuvchining ismi</label>
+          <label>Restaurant Username</label>
           <input
             type="text"
             name="mb_nick"
             class="mb_nick"
-            placeholder="Foydalanuvchining ismi"
+            placeholder="Enter Username"
             value=""
-            required
+            required=""
           />
         </div>
-        <!-- ---------------- -->
         <div class="sign_up_frame">
-          <label for="">Telefon raqam</label>
+          <label>Phone Number</label>
           <input
             type="text"
             name="mb_phone"
             class="mb_phone"
-            placeholder="Telefon raqam"
+            placeholder="Enter Phone Number"
             value=""
-            required
+            required=""
           />
         </div>
       </div>
-      <!-- ------------- -->
 
       <div class="sign_input_frame">
         <div class="sign_up_frame">
-          <label for="">Password</label>
+          <label>Password</label>
           <input
             type="password"
             name="mb_password"
             class="mb_password"
-            placeholder="Passwordni kiriting"
+            placeholder="Enter Password"
             value=""
-            required
+            required=""
           />
         </div>
-        <!-- ---------------- -->
         <div class="sign_up_frame">
-          <label for="">Passwordni tasdiqlash</label>
+          <label>Confirm Password</label>
           <input
             type="password"
             name="mb_confirm_password"
             class="mb_confirm_password"
-            placeholder="Passwordni tasdiqlash"
+            placeholder="Confirm Password"
             value=""
-            required
+            required=""
           />
         </div>
       </div>
-      <!-- ------------- -->
+
       <div class="login_input_frame">
         <div class="media-frame">
           <img class="upload_img_frame" src="/images/default_resto.jpg" />
           <div class="upload_container">
-            <span class="media_text">Taom Rasmi</span>
+            <span class="media_text">Restaurant Image</span>
             <div class="filebox bs3-primary preview-image">
               <input
                 class="upload-name"
-                value="Rasmi tanlang"
+                value="Choose Image"
                 disabled="disabled"
               />
-              <label for="input_file">Rasmni yuklash</label>
+              <label for="input_file">Upload Image</label>
               <input
                 type="file"
                 id="input_file"
@@ -93,32 +88,31 @@
               />
             </div>
             <p class="thumbnail_desc">
-              Oshxona rasmingizni bu yerga yuklang. <br />Muhim ko'rsatmalar:
-              .jpg, .jpeg, yoki .png. <br />rasmda matn yo'q bo'lishi darkor!
+              *Remarks:<br />- Please upload restaurant image here.<br />- Image
+              format: .jpg, .jpeg, or .png. <br />- Image should not contain
+              text!
             </p>
           </div>
         </div>
       </div>
 
       <button class="login_btn btn" name="signup" type="submit">
-        Ro'yhatdan o'tish
+        Register
       </button>
     </div>
   </form>
-
   <script>
     $(function () {
+      //This is to prevent any jQuery code from running before the document is finished loading (is ready). Commonly Used jQuery Event Method. Or $(document).ready()
       let fileTarget = $(".filebox .upload-hidden");
       let filename = "";
       fileTarget.on("change", function () {
         if (window.FileReader) {
           const uploading_file = $(this)[0].files[0];
           const fileType = uploading_file["type"];
-          const validImageTypes = ["image/jpg", "image/jepg", "image/png"];
+          const validImageTypes = ["image/jpg", "image/jpeg", "image/png"];
           if (!validImageTypes.includes(fileType)) {
-            alert(
-              "Iltimos ruhsat etilgan formatdagi rasmlarni yuklang: jpg, jpeg, png"
-            );
+            alert("Please upload allowed image formats: jpg, jpeg, or png!");
           } else {
             if (uploading_file) {
               console.log(URL.createObjectURL(uploading_file));
@@ -147,15 +141,15 @@
         mb_password == "" ||
         mb_confirm_password == ""
       ) {
-        alert("Iltimos hamma malumotlarni kiriting ");
+        alert("Please enter all fields!");
         return false;
       } else if (mb_password !== mb_confirm_password) {
-        alert(`Iltimos passwordni togri kiriting`);
+        alert(`Please enter password correctly!`);
         return false;
       }
 
-      if (restaurant_img) {
-        alert("Iltimos rasmni yuklang");
+      if (!restaurant_img) {
+        alert("Please upload image!");
         return false;
       }
 
@@ -163,4 +157,5 @@
     }
   </script>
 </body>
+
 <%- include('includes/footer') %>
