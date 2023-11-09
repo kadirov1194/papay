@@ -1,6 +1,8 @@
 const assert = require("assert");
 const MemberModel = require("../schema/member_model"); // schema modelni chaqirib olish
 const Definer = require("../lib/mistake");
+const { shapeIntoMongooseObjectId } = require("../lib/config");
+
 class Restaurant {
   constructor() {
     this.memberModel = MemberModel; // Member Schema modelni chaqirib olamiz
@@ -20,7 +22,7 @@ class Restaurant {
       throw err;
     }
   }
-  async updateRestaurantByAdmin(update_data) {
+  async updateRestaurantByAdminData(update_data) {
     try {
       const id = shapeIntoMongooseObjectId(update_data?.id);
       const result = await this.memberModel
