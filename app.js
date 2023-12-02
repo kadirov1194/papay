@@ -1,4 +1,4 @@
-console.log("Web serverni boshlash");
+console.log("Web Serverni boshlash");
 const express = require("express");
 const app = express();
 const router = require("./router.js");
@@ -20,13 +20,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// 2: Session Code
+// 2: Session code
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     cookie: {
       maxAge: 1000 * 60 * 30,
-    }, //for 30minut coocie ni ichida danniylar turadi
+    },
     store: Store,
     resave: true,
     saveUninitialized: true,
@@ -37,14 +37,12 @@ app.use(function (req, res, next) {
   next();
 });
 
-// 3: View Code
-
+// 3: Views code
 app.set("views", "views");
 app.set("view engine", "ejs");
 
-// 4: Routing code
-
-app.use("/resto", router_bssr); // ananaviy
+// 4 Routing code
+app.use("/resto", router_bssr);
 app.use("/", router);
 
 module.exports = app;

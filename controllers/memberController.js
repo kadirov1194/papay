@@ -12,9 +12,7 @@ memberController.signup = async (req, res) => {
       member = new Member(),
       new_member = await member.signupData(data);
 
-    //console.log("result::", new_member);
     const token = memberController.createToken(new_member);
-    //console.log("token:", token);
 
     res.cookie("access_token", token, {
       maxAge: 6 * 3600 * 1000,
@@ -37,9 +35,7 @@ memberController.login = async (req, res) => {
       member = new Member(),
       result = await member.loginData(data);
 
-    //console.log("result::", result);
     const token = memberController.createToken(result);
-    //console.log("token:", token);
 
     res.cookie("access_token", token, {
       maxAge: 6 * 3600 * 1000,
@@ -55,7 +51,8 @@ memberController.login = async (req, res) => {
 
 memberController.logout = (req, res) => {
   console.log("GET cont.logout");
-  res.send("logout sahifasidasiz");
+  res.cookie("access_token", null, { maxAge: 0, httpOnly: true });
+  res.json({ state: "succeed", data: "logout successfully" });
 };
 
 memberController.createToken = (result) => {
@@ -72,6 +69,21 @@ memberController.createToken = (result) => {
 
     assert.ok(token, Definer.auth_err2);
     return token;
+  } catch (err) {
+    throw err;
+  }
+};
+
+memberController.checkMyAuthentication = (req, res) => {
+  try {
+    console.log("GET cont/checkMyAuthentication");
+    let token = req.cookies["access_token"]; //Kelayotgan req ichidan cookieni oladi
+    console.log("token::::", token);
+
+    const member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
+    assert.ok(member, Definer.auth_err2);
+
+    res.json({ state: "succeed", data: member });
   } catch (err) {
     throw err;
   }
