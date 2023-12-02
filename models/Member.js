@@ -13,18 +13,19 @@ class Member {
       const salt = await bcrypt.genSalt();
       input.mb_password = await bcrypt.hash(input.mb_password, salt);
 
-      const new_member = new this.memberModel(input);
+      const new_member = new this.memberModel(input); //member Schema modeldan foydalangan holda
       let result;
 
       try {
+        // yangi userni hosil qilib
         result = await new_member.save();
       } catch (mongo_err) {
         console.log(mongo_err);
         throw new Error(Definer.auth_err1);
       }
 
-      result.mb_password = "";
-      return result;
+      result.mb_password = ""; // passwordini bosh stringa tenglashtirib
+      return result; // resultini qaytarib yubordik
     } catch (err) {
       throw err;
     }
