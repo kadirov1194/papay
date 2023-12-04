@@ -1,7 +1,8 @@
-const MemberModel = require("../schema/member_model"); // schema modelni chaqirib olish
+const MemberModel = require("../schema/member_model");
 const Definer = require("../lib/mistake");
 const assert = require("assert");
 const bcrypt = require("bcryptjs");
+const { shapeIntoMongooseObjectId } = require("../lib/config");
 
 class Member {
   constructor() {
@@ -46,6 +47,55 @@ class Member {
       assert.ok(isMatch, Definer.auth_err4);
 
       return await this.memberModel.findOne({ mb_nick: input.mb_nick }).exec();
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async getChosenMemberData(member, id) {
+    try {
+      id = shapeIntoMongooseObjectId(id);
+
+      console.log("member:::", member);
+
+      if (member) {
+        // condition of not seen before
+      }
+
+      const result = await this.memberModel
+        .aggregate([
+          { $match: { _id: id, mb_status: "ACTIVE" } },
+          { $unset: "mb_password" }, // mb_pass ni olib bermaydi
+        ])
+        .exec();
+
+      assert.ok(result, Definer.general_err2);
+      return result[0];
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async viewChosenItemByMember(member, view_ref_id, group_type) {
+    try {
+      view_ref_id = shapeIntoMongooseObjectId(view_ref_id);
+      const mb_id = shapeIntoMongooseObjectId(member._id);
+
+      const view = new View(mb_id);
+
+      //validation needed
+      const isValid = await view.validateChosenTarget(view_ref_id, group_type);
+      assert.ok(isValid, Definer.general_err2);
+
+      //logged user has seen target before
+      const doesExist = await view.checkViewExistence(view_ref_id);
+      console.log("doesExist::", doesExist);
+
+      if (!doesExist) {
+        const result = await view.insertMemberView(view_ref_id, group_type);
+        assert.ok(result, Definer.general_err1);
+      }
+      return true;
     } catch (err) {
       throw err;
     }
