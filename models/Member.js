@@ -60,6 +60,7 @@ class Member {
 
       if (member) {
         // condition of not seen before
+        await this.viewChosenItemByMember(member, id, "member");
       }
 
       const result = await this.memberModel
