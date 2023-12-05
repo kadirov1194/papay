@@ -8,6 +8,42 @@ class Product {
     this.productModel = ProductModel;
   }
 
+  async getAllproductsData(member, data) {
+    try {
+      const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
+
+      let match = { product_status: "PROCESS" };
+      if (data.restaurant_mb_id) {
+        match["restaurant_mb_id"] = shapeIntoMongooseObjectId(
+          data.restaurant_mb_id
+        );
+        match["product_collection"] = data.product_collection;
+      }
+
+      const sort =
+        data.order === "product_price"
+          ? { [data.order]: 1 } //elementni dynamic qiymati uchun
+          : { [data.order]: -1 };
+
+      const result = await this.productModel
+        .aggregate([
+          { $match: match },
+          { $sort: sort },
+          { $skip: (data.page * 1 - 1) * data.limit },
+          { $limit: data.limit * 1 },
+        ])
+        .exec();
+
+      console.log(result);
+      //todo: check auth member product likes
+
+      assert.ok(result, Definer.general_err1);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   async getAllProductsDataResto(member) {
     try {
       member._id = shapeIntoMongooseObjectId(member._id); //mongodb objectga aylantirib beradi
