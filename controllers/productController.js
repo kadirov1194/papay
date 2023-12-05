@@ -16,6 +16,23 @@ productController.getAllProducts = async (req, res) => {
   }
 };
 
+productController.getChosenProduct = async (req, res) => {
+  try {
+    console.log("POST: cont/getChosenProduct");
+    const product = new Product(); //Product service modeldan instance olyapmiz
+    const id = req.params.id;
+    const result = await product.getChosenProductData(req.member, id);
+    res.json({ state: "succeed", data: result });
+  } catch (err) {
+    console.log(`ERROR, cont/getChosenProduct, ${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
+};
+
+/****************************************
+ * BSSR RELATED METHODS
+ ****************************************/
+
 //=================addNewProduct===================================
 productController.addNewProduct = async (req, res) => {
   try {

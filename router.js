@@ -24,6 +24,12 @@ router.post(
   productController.getAllProducts
 );
 
+router.get(
+  "/products/:id",
+  memberController.retrieveAuthMember,
+  productController.getChosenProduct
+);
+
 // boshqa routerlar
 router.get("/menu", (req, res) => {
   res.send("Menu sahifasidasiz");
