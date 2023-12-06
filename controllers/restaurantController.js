@@ -6,6 +6,24 @@ const Definer = require("../lib/mistake");
 const assert = require("assert");
 const Restaurant = require("../models/Restaurant");
 
+restaurantController.getRestaurants = async (req, res) => {
+  try {
+    console.log("GET: cont/getRestaurants");
+    const data = req.query;
+    const restaurant = new Restaurant();
+    const result = await restaurant.getRestaurantsData(req.member, data);
+    //console.log("result:::", result)
+    res.json({ state: "success", data: result });
+  } catch (err) {
+    console.log(`ERROR, cont/getRestaurants, ${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
+};
+
+/****************************************
+ * BSSR RELATED METHODS
+ ****************************************/
+
 restaurantController.home = async (req, res) => {
   try {
     console.log("GET: controller/home");
@@ -125,7 +143,7 @@ restaurantController.validateAuthRestaurant = (req, res, next) => {
 restaurantController.checkSessions = (req, res) => {
   // Checks if the session has a member and responds with the member details if present, else responds with a failure message.
   if (req.session?.member) {
-    res.json({ state: "succeed", data: req.session.member });
+    res.json({ state: "success", data: req.session.member });
   } else {
     res.json({ state: "fail", message: "You are not authenticated." });
   }
