@@ -3,6 +3,7 @@ const router = express.Router();
 const memberController = require("./controllers/memberController");
 const productController = require("./controllers/productController");
 const restaurantController = require("./controllers/restaurantController");
+const orderController = require("./controllers/orderController");
 
 /******************************************
  *             REST API                   *
@@ -45,13 +46,20 @@ router.get(
   restaurantController.getChosenRestaurant
 );
 
-// boshqa routerlar
-router.get("/menu", (req, res) => {
-  res.send("Menu sahifasidasiz");
-});
+// Order related routers
+router.post(
+  "/orders/create",
+  memberController.retrieveAuthMember,
+  orderController.createOder
+);
 
-router.get("/community", (req, res) => {
-  res.send("Jamiyat sahifasidasiz");
-});
+// // boshqa routerlar
+// router.get("/menu", (req, res) => {
+//   res.send("Menu sahifasidasiz");
+// });
+
+// router.get("/community", (req, res) => {
+//   res.send("Jamiyat sahifasidasiz");
+// });
 
 module.exports = router;
