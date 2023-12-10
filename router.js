@@ -50,7 +50,7 @@ router.get(
 router.post(
   "/orders/create",
   memberController.retrieveAuthMember,
-  orderController.createOder
+  orderController.createOrder
 );
 
 // // boshqa routerlar
