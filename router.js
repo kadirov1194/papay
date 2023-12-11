@@ -59,6 +59,12 @@ router.get(
   orderController.getMyOrders
 );
 
+router.post(
+  "/orders/edit",
+  memberController.retrieveAuthMember,
+  orderController.editChosenOrder
+);
+
 // // boshqa routerlar
 // router.get("/menu", (req, res) => {
 //   res.send("Menu sahifasidasiz");
