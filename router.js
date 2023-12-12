@@ -80,6 +80,12 @@ router.post(
   communityController.createArticle
 );
 
+router.get(
+  "/community/articles",
+  memberController.retrieveAuthMember,
+  communityController.getMemberArticles
+);
+
 // ==============================// boshqa routerlar
 // router.get("/menu", (req, res) => {
 //   res.send("Menu sahifasidasiz");
