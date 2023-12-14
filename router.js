@@ -86,6 +86,12 @@ router.get(
   communityController.getMemberArticles
 );
 
+router.get(
+  "/community/target",
+  memberController.retrieveAuthMember,
+  communityController.getArticles
+);
+
 // ==============================// boshqa routerlar
 // router.get("/menu", (req, res) => {
 //   res.send("Menu sahifasidasiz");
