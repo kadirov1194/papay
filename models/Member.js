@@ -3,6 +3,7 @@ const Definer = require("../lib/mistake");
 const assert = require("assert");
 const bcrypt = require("bcryptjs");
 const { shapeIntoMongooseObjectId } = require("../lib/config");
+const View = require("./View");
 
 class Member {
   constructor() {
@@ -87,6 +88,7 @@ class Member {
 
       //validation needed
       const isValid = await view.validateChosenTarget(view_ref_id, group_type);
+      console.log("isValid::", isValid);
       assert.ok(isValid, Definer.general_err2);
 
       //logged user has seen target before
