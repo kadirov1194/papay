@@ -106,6 +106,12 @@ router.post(
   followController.subscribe
 );
 
+router.post(
+  "/follow/unsubscribe",
+  memberController.retrieveAuthMember,
+  followController.unsubscribe
+);
+
 // ==============================// boshqa routerlar
 // router.get("/menu", (req, res) => {
 //   res.send("Menu sahifasidasiz");

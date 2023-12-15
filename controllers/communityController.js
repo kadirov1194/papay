@@ -56,7 +56,7 @@ communityController.getMemberArticles = async (req, res) => {
 
 communityController.getArticles = async (req, res) => {
   try {
-    console.log("POST: cont/getArticles");
+    console.log("GET: cont/getArticles");
     const community = new Community();
     const result = await community.getArticlesData(req.member, req.query);
 
