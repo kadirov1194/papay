@@ -112,6 +112,8 @@ router.post(
   followController.unsubscribe
 );
 
+router.get("/follow/followings", followController.getMemberFollowings);
+
 // ==============================// boshqa routerlar
 // router.get("/menu", (req, res) => {
 //   res.send("Menu sahifasidasiz");
