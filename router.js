@@ -114,6 +114,12 @@ router.post(
 
 router.get("/follow/followings", followController.getMemberFollowings);
 
+router.get(
+  "/follow/followers",
+  memberController.retrieveAuthMember,
+  followController.getMemberFollowers
+);
+
 // ==============================// boshqa routerlar
 // router.get("/menu", (req, res) => {
 //   res.send("Menu sahifasidasiz");
