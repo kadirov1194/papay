@@ -147,7 +147,7 @@ class Follow {
       ];
 
       if (member && member.id === inquiry.mb_id) {
-        aggregateQuery.push(lookup_auth_member_following(follow_id));
+        aggregateQuery.push(lookup_auth_member_following(follow_id, "follows"));
       }
 
       const result = await this.followModel.aggregate(aggregateQuery).exec();
