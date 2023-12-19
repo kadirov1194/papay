@@ -2,6 +2,7 @@ const LikeModel = require("../schema/like.model");
 const MemberModel = require("../schema/member_model");
 const ProductModel = require("../schema/product_model");
 const BoArticleModel = require("../schema/bo_article.model");
+const Definer = require("../lib/mistake");
 
 class Like {
   constructor(mb_id) {

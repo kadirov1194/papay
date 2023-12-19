@@ -95,6 +95,7 @@ class Community {
           },
           { $unwind: "$member_data" },
           // todo: check auth member liked shosen target
+          lookup_auth_member_liked(auth_mb_id),
         ])
         .exec();
 
