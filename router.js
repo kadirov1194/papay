@@ -37,6 +37,12 @@ router.get(
   productController.getChosenProduct
 );
 
+router.post(
+  "/member-liken",
+  memberController.retrieveAuthMember,
+  memberController.likeMemberChosen
+);
+
 //Restaurant related routers
 router.get(
   "/restaurants",

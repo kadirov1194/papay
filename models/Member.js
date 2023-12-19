@@ -7,6 +7,7 @@ const {
   lookup_auth_member_following,
 } = require("../lib/config");
 const View = require("./View");
+const Like = require("./Like");
 
 class Member {
   constructor() {
@@ -26,7 +27,7 @@ class Member {
         result = await new_member.save();
       } catch (mongo_err) {
         console.log(mongo_err);
-        throw new Error(Definer.auth_err1);
+        throw new Error(Definer.mongo_validition_err1);
       }
 
       result.mb_password = ""; // passwordini bosh stringa tenglashtirib
@@ -105,6 +106,38 @@ class Member {
         assert.ok(result, Definer.general_err1);
       }
       return true;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async likeChosenItemByMember(member, like_ref_id, group_type) {
+    try {
+      like_ref_id = shapeIntoMongooseObjectId(like_ref_id);
+      const mb_id = shapeIntoMongooseObjectId(member._id);
+
+      const like = new Like(mb_id);
+      const isValid = await like.validateTargetItem(like_ref_id, group_type);
+      console.log("isValid::: ", isValid);
+      assert.ok(isValid, Definer.general_err2);
+
+      //doesExist
+      const doesExist = await like.checkLikeExistance(like_ref_id);
+      console.log("doesExist::", doesExist);
+      let data;
+      if (doesExist) {
+        data = await like.removeMemberLike(like_ref_id, group_type);
+      } else {
+        data = await like.insertMemberLike(like_ref_id, group_type);
+      }
+      assert.ok(data, Definer.general_err1);
+
+      const result = {
+        like_group: data && data.like_group ? data.like_group : null,
+        like_ref_id: data && data.like_ref_id ? data.like_ref_id : null,
+        like_status: doesExist ? 0 : 1,
+      };
+      return result;
     } catch (err) {
       throw err;
     }
