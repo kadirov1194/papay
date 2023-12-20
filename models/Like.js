@@ -95,7 +95,7 @@ class Like {
       return result;
     } catch (err) {
       console.log(err);
-      //throw err;
+
       throw new Error(Definer.mongo_validition_err1);
     }
   }
@@ -106,9 +106,8 @@ class Like {
         case "member":
           await this.memberModel
             .findByIdAndUpdate(
-              like_ref_id,
-              { $inc: { mb_likes: modifier } },
-              { new: true }
+              { _id: like_ref_id },
+              { $inc: { mb_likes: modifier } }
             )
             .exec();
           break;
@@ -116,9 +115,8 @@ class Like {
         case "product":
           await this.productModel
             .findByIdAndUpdate(
-              like_ref_id,
-              { $inc: { product_likes: modifier } },
-              { new: true }
+              { _id: like_ref_id },
+              { $inc: { product_likes: modifier } }
             )
             .exec();
           break;
@@ -127,9 +125,8 @@ class Like {
         default:
           await this.boArticleModel
             .findByIdAndUpdate(
-              like_ref_id,
-              { $inc: { art_likes: modifier } },
-              { new: true }
+              { _id: like_ref_id },
+              { $inc: { art_likes: modifier } }
             )
             .exec();
           break;

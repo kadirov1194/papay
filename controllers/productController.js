@@ -22,6 +22,7 @@ productController.getChosenProduct = async (req, res) => {
     const product = new Product(); //Product service modeldan instance olyapmiz
     const id = req.params.id;
     const result = await product.getChosenProductData(req.member, id);
+
     res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR, cont/getChosenProduct, ${err.message}`);

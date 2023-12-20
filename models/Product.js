@@ -5,6 +5,7 @@ const {
 } = require("../lib/config");
 const ProductModel = require("../schema/product_model");
 const Definer = require("../lib/mistake");
+const Member = require("./Member");
 
 class Product {
   constructor() {
