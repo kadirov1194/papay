@@ -3,8 +3,8 @@ const {
   shapeIntoMongooseObjectId,
   lookup_auth_member_liked,
 } = require("../lib/config");
-const ProductModel = require("../schema/product_model");
 const Definer = require("../lib/mistake");
+const ProductModel = require("../schema/product_model");
 const Member = require("./Member");
 
 class Product {
@@ -12,10 +12,11 @@ class Product {
     this.productModel = ProductModel;
   }
 
-  async getAllproductsData(member, data) {
+  async getAllProductsData(member, data) {
     try {
       const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
 
+      // aggregationga kerak boladigan matching object yasaymiz
       let match = { product_status: "PROCESS" };
       if (data.restaurant_mb_id) {
         match["restaurant_mb_id"] = shapeIntoMongooseObjectId(
@@ -26,21 +27,19 @@ class Product {
 
       const sort =
         data.order === "product_price"
-          ? { [data.order]: 1 } //elementni dynamic qiymati uchun
-          : { [data.order]: -1 };
+          ? { [data.order]: 1 } // pastdan tepaga
+          : { [data.order]: -1 }; // tepadan pastga
 
       const result = await this.productModel
         .aggregate([
           { $match: match },
           { $sort: sort },
-          { $skip: (data.page * 1 - 1) * data.limit },
-          { $limit: data.limit * 1 },
-          lookup_auth_member_liked(auth_mb_id),
+          { $skip: (data.page * 1 - 1) * data.limit }, // 1-pageni oladi
+          { $limit: data.limit * 1 }, //
+          // todo: check auth member product likes
+          lookup_auth_member_liked(auth_mb_id, "members"),
         ])
         .exec();
-
-      console.log(result);
-      //todo: check auth member product likes
 
       assert.ok(result, Definer.general_err1);
       return result;
@@ -49,25 +48,30 @@ class Product {
     }
   }
 
+  // login bolgan member
   async getChosenProductData(member, id) {
     try {
+      // req ni kim beryapti
       const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
       id = shapeIntoMongooseObjectId(id);
 
       if (member) {
+        // Member service modelni ishlatamiz
         const member_obj = new Member();
+        // kim,  nimani,
         await member_obj.viewChosenItemByMember(member, id, "product");
       }
 
       const result = await this.productModel
         .aggregate([
           { $match: { _id: id, product_status: "PROCESS" } },
-          lookup_auth_member_liked(auth_mb_id),
+          // todo: check auth member product likes
+          lookup_auth_member_liked(auth_mb_id, "members"),
         ])
         .exec();
 
       assert.ok(result, Definer.general_err1);
-      return result;
+      return result[0];
     } catch (err) {
       throw err;
     }
@@ -75,13 +79,11 @@ class Product {
 
   async getAllProductsDataResto(member) {
     try {
-      member._id = shapeIntoMongooseObjectId(member._id); //mongodb objectga aylantirib beradi
+      member._id = shapeIntoMongooseObjectId(member._id);
       const result = await this.productModel.find({
-        restaurant_member_id: member._id,
-      }); //Schema modeldan olyapti
-
+        restaurant_mb_id: member._id,
+      });
       assert.ok(result, Definer.general_err1);
-      console.log("result", result);
       return result;
     } catch (err) {
       throw err;
@@ -96,7 +98,6 @@ class Product {
       const result = await new_product.save();
 
       assert.ok(result, Definer.product_err1);
-
       return result;
     } catch (err) {
       throw err;
@@ -108,22 +109,14 @@ class Product {
       id = shapeIntoMongooseObjectId(id);
       mb_id = shapeIntoMongooseObjectId(mb_id);
 
-      const result = await this.productModel
-        .findOneAndUpdate(
-          {
-            _id: id,
-            restaurant_member_id: mb_id,
-          },
-          updated_data,
-          {
-            runValidators: true,
-            lean: true,
-            returnDocument: "after",
-          }
-        )
+      const result = this.productModel
+        .findOneAndUpdate({ _id: id, restaurant_mb_id: mb_id }, updated_data, {
+          runValidators: true,
+          lean: true,
+          returnDocument: "after",
+        })
         .exec();
 
-      //natijani tekshiramiz. Agar natija Update bolmagan bo'lsa: err
       assert.ok(result, Definer.general_err1);
       return result;
     } catch (err) {

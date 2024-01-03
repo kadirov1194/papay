@@ -83,7 +83,7 @@ restaurantController.signupProcess = async (req, res) => {
     // console.log("POST: req.body:::", req.body);
     // res.send("OK");
     new_member.mb_type = "RESTAURANT"; //because req comming to adinka
-    new_member.mb_image = req.file.path; // pass property of file object
+    new_member.mb_image = req.file.path.replace(/\\/g, "/"); // pass property of file object
 
     const member = new Member();
     const result = await member.signupData(new_member);
