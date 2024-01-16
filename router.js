@@ -36,6 +36,12 @@ router.get(
   memberController.retrieveAuthMember,
   productController.getChosenProduct
 );
+router.post(
+  "/member/update",
+  memberController.retrieveAuthMember,
+  uploader_member.single("mb_image"),
+  memberController.updateMember
+);
 
 router.post(
   "/member-liken",
